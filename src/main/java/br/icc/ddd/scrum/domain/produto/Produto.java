@@ -1,25 +1,32 @@
 package br.icc.ddd.scrum.domain.produto;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.icc.ddd.scrum.domain.Entidade;
+import br.icc.ddd.scrum.domain.produto.backlogitem.BacklogItem;
 
 @Entity
 public class Produto extends Entidade {
 
 	private static final long serialVersionUID = 1L;
-	
-	@NotNull(message="O nome È obrigatÛrio")
-	@Size(max=50, message="O nome deve possuir no m·ximo 50 caracteres")
+
+	@NotNull(message="O nome √© obrigat√≥rio")
+	@Size(max=50, message="O nome deve possuir no m√°ximo 50 caracteres")
 	private String nome;
-	
-	@Size(max=255, message="A descriÁ„o deve possuir no m·ximo 255 caracteres")
+
+	@Size(max=255, message="A descri√ß√£o deve possuir no m√°ximo 255 caracteres")
 	private String descricao;
-	
+
+	@OneToMany(mappedBy="produto")
+	private Set<BacklogItem> backlogItems;
+
 	public Produto() {}
-	
+
 	public Produto(String nome, String descricao) {
 		this.nome = nome;
 		this.descricao = descricao;
