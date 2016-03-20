@@ -1,48 +1,52 @@
 package br.icc.ddd.scrum.web.produto;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.omnifaces.cdi.ViewScoped;
 
+import br.icc.ddd.scrum.application.produto.ProdutoService;
+import br.icc.ddd.scrum.domain.produto.Produto;
+import br.icc.ddd.scrum.domain.produto.ProdutoRepository;
+import br.icc.ddd.scrum.web.BaseController;
+
 @Named
 @ViewScoped
-public class ProdutoController implements Serializable {
+public class ProdutoController extends BaseController {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message="O nome do produto é obrigatório")
-	@Size(max=50, message="O nome do produto deve possuir no máximo 50 caracteres")
-	private String nomeProduto;
+	@Inject
+	private ProdutoService produtoService;
 
-	@Size(max=5, message="A descrição do produto deve possuir no máximo 5 caracteres")
-	private String descricaoProduto;
+	@Inject
+	private ProdutoRepository produtoRepository;
 
-	public void save() {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário salvo com sucesso", null));
+	private Produto produto;
+
+	@PostConstruct
+	public void postConstruct() {
+		produto = new Produto();
 	}
 
-	public String getNomeProduto() {
-		return nomeProduto;
+	public void criar() {
+		produtoService.novoProduto(produto);
+		addInfoMessageToFacesContext("O produto foi criado com sucesso", null);
+		redirect("/produto/listar.xhtml", null);
 	}
 
-	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
+	public List<Produto> listarTodosOsProdutos() {
+		return produtoRepository.obterTodos();
 	}
 
-	public String getDescricaoProduto() {
-		return descricaoProduto;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setDescricaoProduto(String descricaoProduto) {
-		this.descricaoProduto = descricaoProduto;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
-
-
-
 }

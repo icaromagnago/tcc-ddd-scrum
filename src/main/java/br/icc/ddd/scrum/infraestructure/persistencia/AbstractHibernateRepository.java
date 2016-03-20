@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 
 import br.icc.ddd.scrum.domain.Entidade;
+import br.icc.ddd.scrum.domain.Repository;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractHibernateRepository<E extends Entidade> implements Repository<E> {
@@ -68,14 +69,14 @@ public abstract class AbstractHibernateRepository<E extends Entidade> implements
 	@Override
 	public void incluir(List<E> entidades) {
 		Session session = getSession();
-		entidades.forEach(entidade -> {
-			int index = 0;
-			session.saveOrUpdate(entidade);
-			if (index % BATCH_SIZE == 0) {
-				session.flush();
-				session.clear();
-			}
-		});
+//		entidades.forEach(entidade -> {
+//			int index = 0;
+//			session.saveOrUpdate(entidade);
+//			if (index % BATCH_SIZE == 0) {
+//				session.flush();
+//				session.clear();
+//			}
+//		});
 	}
 
 	/**
@@ -93,7 +94,7 @@ public abstract class AbstractHibernateRepository<E extends Entidade> implements
 	 */
 	@Override
 	public void atualizar(List<E> entidades) {
-		entidades.forEach(entidade -> em.merge(entidade));
+		//entidades.forEach(entidade -> em.merge(entidade));
 	}
 
 	/**

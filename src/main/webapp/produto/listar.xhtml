@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Todos os produtos</title>
+	 
+	<link
+		href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<h:outputStylesheet library="css" name="paper_theme_bootstrap.css"></h:outputStylesheet>
+	
+</h:head>
+<h:body style="padding:20px">
+	<ui:include src="/nav.xhtml" />
+	<form jsf:id="todosOsProdutos">
+		<p:dataTable id="dataTableProdutos" var="produto" value="#{produtoController.listarTodosOsProdutos()}">
+			<p:column headerText="Id">
+				<h:outputText value="#{produto.id}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{produto.nome}" />
+			</p:column>
+		</p:dataTable>
+	</form>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" />
+</h:body>
+</html>

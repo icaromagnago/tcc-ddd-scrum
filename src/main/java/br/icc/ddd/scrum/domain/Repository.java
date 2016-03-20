@@ -1,9 +1,7 @@
-package br.icc.ddd.scrum.infraestructure.persistencia;
+package br.icc.ddd.scrum.domain;
 
 import java.io.Serializable;
 import java.util.List;
-
-import br.icc.ddd.scrum.domain.Entidade;
 
 public interface Repository<E extends Entidade> extends Serializable {
 

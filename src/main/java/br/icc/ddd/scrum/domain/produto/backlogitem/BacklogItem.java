@@ -1,9 +1,14 @@
 package br.icc.ddd.scrum.domain.produto.backlogitem;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,9 +18,9 @@ import br.icc.ddd.scrum.domain.produto.Produto;
 @Entity
 public class BacklogItem extends Entidade {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4802814869870937580L;
 
-	@NotNull
+	@NotNull(message="O resumo é obrigatório")
 	@Size(max=100, message="O resumo deve possuir no máximo 100 caracteres")
 	private String resumo;
 
@@ -37,9 +42,11 @@ public class BacklogItem extends Entidade {
 	@Enumerated(EnumType.STRING)
 	private StoryPoints storyPoints;
 
+	@OneToMany(mappedBy="backlogItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval=true)
+	Set<Tarefa> tarefas;
+
 	public BacklogItem() {
 		super();
-		this.setStatusBacklogItem(StatusBacklogItem.PLANEJADO_BACKLOG);
 	}
 
 	public String getResumo() {
