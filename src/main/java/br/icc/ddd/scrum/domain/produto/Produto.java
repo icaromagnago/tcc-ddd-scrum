@@ -3,12 +3,14 @@ package br.icc.ddd.scrum.domain.produto;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.icc.ddd.scrum.domain.Entidade;
 import br.icc.ddd.scrum.domain.ValidacaoException;
+import br.icc.ddd.scrum.domain.equipe.Membro;
 import br.icc.ddd.scrum.domain.produto.backlogitem.BacklogItem;
 
 @Entity
@@ -22,6 +24,9 @@ public class Produto extends Entidade {
 
 	@Size(max=1000, message="A descrição deve possuir no máximo 1000 caracteres")
 	private String descricao;
+
+	@ManyToOne(optional=true)
+	private Membro productOwner;
 
 	@OneToMany(mappedBy="produto")
 	private Set<BacklogItem> backlogItems;
@@ -59,5 +64,13 @@ public class Produto extends Entidade {
 		if(!violacoes.isEmpty()) {
 			throw new ValidacaoException(getClass(), violacoes);
 		}
+	}
+
+	public Membro getProductOwner() {
+		return productOwner;
+	}
+
+	public void setProductOwner(Membro productOwner) {
+		this.productOwner = productOwner;
 	}
 }

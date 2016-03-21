@@ -19,9 +19,15 @@ public abstract class BaseController implements Serializable {
 
 	private Logger logger = LoggerFactory.getLogger(BaseController.class);
 
+	protected String obterParametroRequisicao(String param) {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		return facesContext.getExternalContext().getRequestParameterMap().get(param);
+	}
+
 	private void addMessageToFacesContext(String clientId, Severity severidade, String resumo, String detalhe) {
 		FacesMessage facesMessage = new FacesMessage(severidade, resumo, detalhe);
 		FacesContext.getCurrentInstance().addMessage(clientId, facesMessage);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 	}
 
 	/**
@@ -100,8 +106,8 @@ public abstract class BaseController implements Serializable {
 			}
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			String path = externalContext.getRequestContextPath();
-
-			String encodeRedirectURL = externalContext.encodeRedirectURL(path, params);
+			String url = path.concat(outcome);
+			String encodeRedirectURL = externalContext.encodeRedirectURL(url, params);
 			externalContext.redirect(encodeRedirectURL);
 
 		} catch (IOException e) {

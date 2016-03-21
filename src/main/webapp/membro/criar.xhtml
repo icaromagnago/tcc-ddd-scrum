@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<title>Novo Membro</title>
+		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" />
+		<link
+			href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<h:outputStylesheet library="css" name="paper_theme_bootstrap.css"></h:outputStylesheet>
+		
+	</h:head>
+	<h:body style="padding:20px">
+		<ui:include src="/nav.xhtml" />
+		<form jsf:id="membro-form">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Novo Membro</h3>
+				</div>
+				<div class="panel-body">
+					<p:messages id="messages" showDetail="false" autoUpdate="true"
+						closable="true" />
+					<p:growl id="grow-msg" globalOnly="true" life="6000" />
+					
+					<div class="form-group">
+						<label for="nome-membro">Nome</label> <input jsf:id="nome-membro"
+							type="text" class="form-control" placeholder="Nome do membro"
+							jsf:value="#{membroController.membro.nome}" />
+					</div>
+					<div class="form-group">
+						<label for="email-membro">Email</label>
+						<input jsf:id="email-membro" class="form-control" type="text"
+							placeholder="Insira um email válido"
+							jsf:value="#{membroController.membro.email}" />
+					</div>
+					<div class="form-group">
+						<label for="nome-usuario">Nome de usuário</label>
+						<input jsf:id="nome-usuario" class="form-control" type="text"
+							placeholder="Nome do usuário no sistema"
+							jsf:value="#{membroController.membro.nomeDeUsuario}" />
+					</div>
+	
+					<button type="Submit" class="btn btn-default btn-primary"
+						jsf:action="#{membroController.criar}">
+						<i class="glyphicon glyphicon-ok" /> Criar
+						<f:ajax execute="@form" render="membro-form" />
+					</button>
+				</div>
+			</div>
+		</form>
+	</h:body>
+</html>

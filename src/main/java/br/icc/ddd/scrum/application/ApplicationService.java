@@ -15,9 +15,13 @@ public interface ApplicationService extends Serializable {
 	/**
 	 * Valida as entidades através do bean validation
 	 * @param entidade a ser validada
-	 * @throws ValidacaoException
+	 * @throws IllegalArgumentException, ValidacaoException
 	 */
 	default public void validarEntidade(Entidade entidade) {
+		if(entidade == null) {
+			throw new IllegalArgumentException("entidade não pode ser null");
+		}
+
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Set<ConstraintViolation<Entidade>> violacoes = factory.getValidator().validate(entidade);
 		if(!violacoes.isEmpty()) {

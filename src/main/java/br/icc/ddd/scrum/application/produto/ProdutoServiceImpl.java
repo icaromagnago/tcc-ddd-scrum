@@ -29,4 +29,19 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 		return novoProduto.getId();
 	}
+
+	/**
+	 * Altera informações de um produto existente
+	 * @param produto produto a ser atualizado
+	 * @throws ValidacaoException, {@link IllegalArgumentException}
+	 */
+	@Override
+	public void alterarProduto(Produto produto) {
+		validarEntidade(produto);
+		if(produto.getId() == null) {
+			throw new IllegalArgumentException("Produto inexistente");
+		}
+
+		produtoRepository.atualizar(produto);
+	}
 }
