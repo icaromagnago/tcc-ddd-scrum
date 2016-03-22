@@ -23,29 +23,31 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Todos os Membros</h3>
 				</div>
-				<p:dataTable id="dataTableMembros" styleClass="table"
-					emptyMessage="Nenhum membro cadastrado" 
-					var="membro" value="#{membroController.listarTodosOsMembros()}">
-					<p:column headerText="Id">
-						<h:outputText value="#{membro.id}" />
-					</p:column>
-					<p:column headerText="Nome">
-						<h:outputText value="#{membro.nome}" />
-					</p:column>
-					<p:column headerText="Nome de usuário">
-						<h:outputText value="#{membro.nomeDeUsuario}" />
-					</p:column>
-					<p:column headerText="Email">
-						<h:outputText value="#{membro.email}" />
-					</p:column>
-					<p:column headerText="Opções">
-						<a jsf:id="administrar" jsf:outcome="/membro/administrar.xhtml" title="administrar"
-							jsf:includeViewParams="true">
-							<i class="glyphicon glyphicon-cog" />Administrar
-							<f:param name="id" value="#{membro.id}" />
-						</a>
-					</p:column>
-				</p:dataTable>
+				<div class="panel-body">
+					<p:dataTable id="dataTableMembros"
+						emptyMessage="Nenhum membro cadastrado" 
+						var="membro" value="#{membroController.listarTodosOsMembros()}">
+						<p:column headerText="Id">
+							<h:outputText value="#{membro.id}" />
+						</p:column>
+						<p:column headerText="Nome">
+							<h:outputText value="#{membro.nome}" />
+						</p:column>
+						<p:column headerText="Nome de usuário">
+							<h:outputText value="#{membro.nomeDeUsuario}" />
+						</p:column>
+						<p:column headerText="Email">
+							<h:outputText value="#{membro.email}" />
+						</p:column>
+						<p:column headerText="Opções">
+							<a jsf:id="administrar" jsf:outcome="/membro/administrar.xhtml" title="administrar"
+								jsf:includeViewParams="true">
+								<i class="glyphicon glyphicon-cog" />Administrar
+								<f:param name="id" value="#{membro.id}" />
+							</a>
+						</p:column>
+					</p:dataTable>
+				</div>
 			</div>
 		</form>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" />

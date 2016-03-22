@@ -67,11 +67,11 @@ public class ProdutoController extends BaseController {
 	}
 
 	public List<Produto> listarTodosOsProdutos() {
-		return produtoRepository.obterTodos();
+		return produtoRepository.listarTodos();
 	}
 
 	public List<Membro> listarTodosOsMembros() {
-		return membroRepository.obterTodos();
+		return membroRepository.listarTodos();
 	}
 
 	public Produto getProduto() {

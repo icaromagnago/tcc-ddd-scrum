@@ -10,6 +10,8 @@ import org.omnifaces.cdi.ViewScoped;
 
 import br.icc.ddd.scrum.application.equipe.MembroService;
 import br.icc.ddd.scrum.domain.ValidacaoException;
+import br.icc.ddd.scrum.domain.equipe.Equipe;
+import br.icc.ddd.scrum.domain.equipe.EquipeRepository;
 import br.icc.ddd.scrum.domain.equipe.Membro;
 import br.icc.ddd.scrum.domain.equipe.MembroRepository;
 import br.icc.ddd.scrum.web.BaseController;
@@ -25,6 +27,9 @@ public class MembroController extends BaseController {
 
 	@Inject
 	private MembroRepository membroRepository;
+
+	@Inject
+	private EquipeRepository equipeRepository;
 
 	private Membro membro;
 
@@ -44,7 +49,11 @@ public class MembroController extends BaseController {
 	}
 
 	public List<Membro> listarTodosOsMembros() {
-		return membroRepository.obterTodos();
+		return membroRepository.listarTodos();
+	}
+
+	public List<Equipe> listarTodasAsEquipes() {
+		return equipeRepository.listarTodos();
 	}
 
 	public Membro getMembro() {

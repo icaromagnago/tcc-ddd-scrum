@@ -1,6 +1,7 @@
 package br.icc.ddd.scrum.domain.equipe;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,16 +29,20 @@ public class Membro extends Entidade {
 	@NotNull
 	private boolean ativo;
 
+	@ManyToOne(optional=true)
+	private Equipe equipe;
+
 	public Membro() {
 		super();
 		this.setAtivo(true);
 	}
 
-	public Membro(String nome, String email, String nomeDeUsuario) {
+	public Membro(String nome, String email, String nomeDeUsuario, Equipe equipe) {
 		this.setNome(nome);
 		this.setEmail(email);
 		this.setNomeDeUsuario(nomeDeUsuario);
 		this.setAtivo(true);
+		this.setEquipe(equipe);
 	}
 
 	public String getNome() {
@@ -146,5 +151,13 @@ public class Membro extends Entidade {
 			return false;
 		}
 		return true;
+	}
+
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
 	}
 }

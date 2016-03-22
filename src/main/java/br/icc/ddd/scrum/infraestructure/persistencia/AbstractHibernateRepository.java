@@ -48,7 +48,7 @@ public abstract class AbstractHibernateRepository<E extends Entidade> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> obterTodos() {
+	public List<E> listarTodos() {
 		return em.createQuery("from " + clazz.getName()).getResultList();
 	}
 
@@ -69,14 +69,14 @@ public abstract class AbstractHibernateRepository<E extends Entidade> implements
 	@Override
 	public void incluir(List<E> entidades) {
 		Session session = getSession();
-//		entidades.forEach(entidade -> {
-//			int index = 0;
-//			session.saveOrUpdate(entidade);
-//			if (index % BATCH_SIZE == 0) {
-//				session.flush();
-//				session.clear();
-//			}
-//		});
+		entidades.forEach(entidade -> {
+			int index = 0;
+			session.saveOrUpdate(entidade);
+			if (index % BATCH_SIZE == 0) {
+				session.flush();
+				session.clear();
+			}
+		});
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class AbstractHibernateRepository<E extends Entidade> implements
 	 */
 	@Override
 	public void atualizar(List<E> entidades) {
-		//entidades.forEach(entidade -> em.merge(entidade));
+		entidades.forEach(entidade -> em.merge(entidade));
 	}
 
 	/**

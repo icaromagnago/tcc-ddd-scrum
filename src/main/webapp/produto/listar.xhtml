@@ -23,25 +23,23 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Todos os Produtos</h3>
 				</div>
-				<div class="panel-body">
-					<p:dataTable id="dataTableProdutos"
-						emptyMessage="Nenhum produto cadastrado" 
-						var="produto" value="#{produtoController.listarTodosOsProdutos()}">
-						<p:column headerText="Id">
-							<h:outputText value="#{produto.id}" />
-						</p:column>
-						<p:column headerText="Nome">
-							<h:outputText value="#{produto.nome}" />
-						</p:column>
-						<p:column headerText="Opções">
-							<a jsf:id="administrar" jsf:outcome="/produto/administrar.xhtml" title="administrar"
-								jsf:includeViewParams="true">
-								<i class="glyphicon glyphicon-cog" />Administrar
-								<f:param name="id" value="#{produto.id}" />
-							</a>
-						</p:column>
-					</p:dataTable>
-				</div>
+				<p:dataTable id="dataTableProdutos" styleClass="table"
+					emptyMessage="Nenhum produto cadastrado" 
+					var="produto" value="#{produtoController.listarTodosOsProdutos()}">
+					<p:column headerText="Id">
+						<h:outputText value="#{produto.id}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{produto.nome}" />
+					</p:column>
+					<p:column headerText="Opções">
+						<a jsf:id="administrar" jsf:outcome="/produto/administrar.xhtml" title="administrar"
+							jsf:includeViewParams="true">
+							<i class="glyphicon glyphicon-cog" />Administrar
+							<f:param name="id" value="#{produto.id}" />
+						</a>
+					</p:column>
+				</p:dataTable>
 			</div>
 		</form>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" />

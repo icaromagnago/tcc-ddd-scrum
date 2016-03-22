@@ -18,7 +18,7 @@ public interface Repository<E extends Entidade> extends Serializable {
 	 *
 	 * @return List<E> Entidades recuperadas
 	 */
-	List<E> obterTodos();
+	List<E> listarTodos();
 
 	/**
 	 * Persiste uma entidade na base de dados através do persit.
