@@ -23,12 +23,23 @@
 			    width: 75%;
 			    padding-top: 8px;
 			}
+			
+			.input-group .ui-autocomplete {
+				width: auto;
+			    zoom: 1;
+			    cursor: pointer;
+			    -moz-box-shadow: none;
+			    -webkit-box-shadow: none;
+			    box-shadow: none;
+			    position: relative;
+			    display: block;
+			}
 		</style>
 	</h:head>
 	<h:body style="padding:20px">
 		<ui:include src="/nav.xhtml" />
 		<form jsf:id="equipe-form">
-			<div class="panel panel-primary">
+			<div jsf:id="inform-basic-equipe" class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Nova Equipe</h3>
 				</div>
@@ -65,19 +76,57 @@
 			</div>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title pull-left">Membros</h3>
+					<h3 class="panel-title">Membros</h3>
+					<!--  
 					<button type="submit" class="btn btn-default pull-right btn-sm">
 						<i class="glyphicon glyphicon-plus" /> Adicionar
 					</button>
-					 <div class="clearfix"></div>
+					 <div class="clearfix"></div> -->
 				</div>
 				<div class="panel-body">
+					<div jsf:id="areaAdicionarMembro" class="input-group">
+						<p:autoComplete id="auto-complete"
+						 	minQueryLength="3" 
+						 	inputStyleClass="form-control"
+							emptyMessage="nenhum mebro encontrado" 
+							converter="membroConverter"
+							value="#{equipeController.membro}"
+							var="membro"
+							completeMethod="#{equipeController.autoCompleteMembrosPorNome}"
+							itemLabel="#{membro.nome}" 
+							itemValue="#{membro}"
+							placeholder="busque pelo nome do membro" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default btn-sm"
+								jsf:action="#{equipeController.adicionarMembro}">
+								<i class="glyphicon glyphicon-plus" /> Adicionar
+								<f:ajax execute="areaAdicionarMembro" render="tableMembros areaAdicionarMembro" />
+							</button>
+						</span>
+					</div>
 				</div>
+				
+				<p:dataTable 
+					id="tableMembros" editMode="true"
+					value="#{equipeController.membrosEquipe}" var="membro"
+					emptyMessage="nenhum membro adicionado" styleClass="table">
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{membro.nome}" />
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{membro.email}" />
+					</p:column>
+					
+					<p:column headerText="Nome de Usuário">
+						<h:outputText value="#{membro.nomeDeUsuario}" />
+					</p:column>
+				</p:dataTable>
 			</div>
 			<button type="Submit" class="btn btn-default btn-primary"
 				jsf:action="#{membroController.criar}">
 				<i class="glyphicon glyphicon-ok" /> Criar
-				<f:ajax execute="@form" render="equipe-form" />
+				<f:ajax execute="inform-basic-equipe" render="@form" />
 			</button>
 		</form>
 	</h:body>
