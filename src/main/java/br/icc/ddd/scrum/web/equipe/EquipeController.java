@@ -10,6 +10,8 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 
+import br.icc.ddd.scrum.application.equipe.EquipeService;
+import br.icc.ddd.scrum.domain.RegraDeNegocioException;
 import br.icc.ddd.scrum.domain.ValidacaoException;
 import br.icc.ddd.scrum.domain.equipe.Equipe;
 import br.icc.ddd.scrum.domain.equipe.Membro;
@@ -25,6 +27,8 @@ public class EquipeController extends BaseController {
 	@Inject
 	private MembroRepository membroRepository;
 
+	@Inject
+	private EquipeService equipeService;
 
 	private Equipe equipe;
 
@@ -40,11 +44,14 @@ public class EquipeController extends BaseController {
 
 	public void criar() {
 		try {
-
-			addInfoMessageToFacesContext("O produto foi criado com sucesso", null);
-			redirect("/produto/listar.xhtml", null);
+			this.equipeService.novaEquipe(this.equipe, this.membrosEquipe);
+			addInfoMessageToFacesContext("A equipe foi criada com sucesso", null);
+			redirect("/equipe/listar.xhtml", null);
 		} catch(ValidacaoException e) {
 			//Tratar o erro de validação
+		} catch(RegraDeNegocioException e) {
+			getLog().error(e.getMessage(), e);
+			e.mensagens().forEach(mensagem -> addErrorMessageToFacesContext(mensagem, null));
 		}
 	}
 

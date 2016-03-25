@@ -45,6 +45,23 @@ public class Membro extends Entidade {
 		this.setEquipe(equipe);
 	}
 
+	/**
+	 * Verifica se o membro já é membro de uma outra equipe que não seja esta.
+	 * @param idEquipe id da equipe a desconsiderar
+	 * @return True se o membro é membro de outra equipe que não esta. False caso contrário.
+	 */
+	public boolean ehMembroDeAlgumaOutraEquipe(Long idEquipe) {
+		return getEquipe() != null && getEquipe().getId() != idEquipe;
+	}
+
+	/**
+	 * Vincula o membro a equipe
+	 * @param equipe na qual o membro será vinculado
+	 */
+	public void vincularAEquipe(Equipe equipe) {
+		setEquipe(equipe);
+	}
+
 	public String getNome() {
 		return nome;
 	}
