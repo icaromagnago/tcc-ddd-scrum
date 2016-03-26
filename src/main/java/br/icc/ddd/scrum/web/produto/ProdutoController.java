@@ -11,6 +11,8 @@ import org.omnifaces.cdi.ViewScoped;
 
 import br.icc.ddd.scrum.application.produto.ProdutoService;
 import br.icc.ddd.scrum.domain.ValidacaoException;
+import br.icc.ddd.scrum.domain.equipe.Equipe;
+import br.icc.ddd.scrum.domain.equipe.EquipeRepository;
 import br.icc.ddd.scrum.domain.equipe.Membro;
 import br.icc.ddd.scrum.domain.equipe.MembroRepository;
 import br.icc.ddd.scrum.domain.produto.Produto;
@@ -28,6 +30,9 @@ public class ProdutoController extends BaseController {
 
 	@Inject
 	private ProdutoRepository produtoRepository;
+
+	@Inject
+	private EquipeRepository equipeRepository;
 
 	@Inject
 	private MembroRepository membroRepository;
@@ -72,6 +77,10 @@ public class ProdutoController extends BaseController {
 
 	public List<Membro> listarTodosOsMembros() {
 		return membroRepository.listarTodos();
+	}
+
+	public List<Equipe> listarTodasAsEquipes() {
+		return equipeRepository.listarTodos();
 	}
 
 	public Produto getProduto() {

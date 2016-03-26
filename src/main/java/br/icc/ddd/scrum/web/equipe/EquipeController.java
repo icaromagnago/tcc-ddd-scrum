@@ -8,15 +8,19 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.cdi.ViewScoped;
 
 import br.icc.ddd.scrum.application.equipe.EquipeService;
 import br.icc.ddd.scrum.domain.RegraDeNegocioException;
 import br.icc.ddd.scrum.domain.ValidacaoException;
 import br.icc.ddd.scrum.domain.equipe.Equipe;
+import br.icc.ddd.scrum.domain.equipe.EquipeRepository;
 import br.icc.ddd.scrum.domain.equipe.Membro;
 import br.icc.ddd.scrum.domain.equipe.MembroRepository;
 import br.icc.ddd.scrum.web.BaseController;
+
+import com.google.common.collect.Sets;
 
 @Named
 @ViewScoped
@@ -26,6 +30,9 @@ public class EquipeController extends BaseController {
 
 	@Inject
 	private MembroRepository membroRepository;
+
+	@Inject
+	private EquipeRepository equipeRepository;
 
 	@Inject
 	private EquipeService equipeService;
@@ -38,8 +45,14 @@ public class EquipeController extends BaseController {
 
 	@PostConstruct
 	public void postConstruct() {
-		equipe = new Equipe();
-		membrosEquipe = new HashSet<Membro>();
+		String id = obterParametroRequisicao("id");
+		if(StringUtils.isEmpty(id)) {
+			equipe = new Equipe();
+			membrosEquipe = new HashSet<Membro>();
+		} else {
+			equipe = equipeRepository.obter(Long.valueOf(id));
+			membrosEquipe = Sets.newHashSet(membroRepository.todosOsMembrosDaEquipe(Long.valueOf(id)));
+		}
 	}
 
 	public void criar() {
@@ -53,6 +66,23 @@ public class EquipeController extends BaseController {
 			getLog().error(e.getMessage(), e);
 			e.mensagens().forEach(mensagem -> addErrorMessageToFacesContext(mensagem, null));
 		}
+	}
+
+	public void alterar() {
+		try {
+			this.equipeService.atualizarEquipe(this.equipe, this.membrosEquipe);
+			addInfoMessageToFacesContext("A equipe foi atualizada com sucesso", null);
+			redirect("/equipe/listar.xhtml", null);
+		} catch(ValidacaoException e) {
+			//Tratar o erro de validação
+		} catch(RegraDeNegocioException e) {
+			getLog().error(e.getMessage(), e);
+			e.mensagens().forEach(mensagem -> addErrorMessageToFacesContext(mensagem, null));
+		}
+	}
+
+	public List<Equipe> listarTodasAsEquipes() {
+		return equipeRepository.listarTodos();
 	}
 
 	public List<Membro> listarTodosOsMembros() {

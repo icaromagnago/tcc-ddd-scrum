@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.cdi.ViewScoped;
 
 import br.icc.ddd.scrum.application.equipe.MembroService;
@@ -35,13 +36,28 @@ public class MembroController extends BaseController {
 
 	@PostConstruct
 	public void postConstruct() {
-		membro = new Membro();
+		String id = obterParametroRequisicao("id");
+		if(StringUtils.isEmpty(id)) {
+			membro = new Membro();
+		} else {
+			membro = membroRepository.obter(Long.valueOf(id));
+		}
 	}
 
 	public void criar() {
 		try {
 			this.membroService.novoMembro(membro);
 			addInfoMessageToFacesContext("O novo membro foi criado com sucesso", null);
+			redirect("/membro/listar.xhtml", null);
+		} catch(ValidacaoException e) {
+			//Tratar o erro de validação
+		}
+	}
+
+	public void alterar() {
+		try {
+			this.membroService.atualizarMembro(membro);
+			addInfoMessageToFacesContext("O novo membro foi atualizado com sucesso", null);
 			redirect("/membro/listar.xhtml", null);
 		} catch(ValidacaoException e) {
 			//Tratar o erro de validação

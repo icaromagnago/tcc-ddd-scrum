@@ -53,6 +53,19 @@
 						</h:selectOneMenu>
 					</div>
 					
+					<div class="form-group">
+						<label for="equipe">Equipe</label>
+						<h:selectOneMenu id="equipe" 
+							value="#{produtoController.produto.equipe}" 
+							styleClass="form-control">
+							<f:converter converterId="omnifaces.SelectItemsConverter" />
+							<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+							<f:selectItems 
+								value="#{produtoController.listarTodasAsEquipes()}" 
+								var="equipe" itemLabel="#{equipe.nome}" />
+						</h:selectOneMenu>
+					</div>
+					
 					<button type="Submit" class="btn btn-default btn-primary"
 						jsf:action="#{produtoController.alterar}">
 						<i class="glyphicon glyphicon-ok" /> Salvar

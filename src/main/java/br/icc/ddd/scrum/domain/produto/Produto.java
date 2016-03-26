@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import br.icc.ddd.scrum.domain.Entidade;
 import br.icc.ddd.scrum.domain.ValidacaoException;
+import br.icc.ddd.scrum.domain.equipe.Equipe;
 import br.icc.ddd.scrum.domain.equipe.Membro;
 import br.icc.ddd.scrum.domain.produto.backlogitem.BacklogItem;
 
@@ -30,6 +31,9 @@ public class Produto extends Entidade {
 
 	@OneToMany(mappedBy="produto")
 	private Set<BacklogItem> backlogItems;
+
+	@ManyToOne(optional=true)
+	private Equipe equipe;
 
 	public Produto() {
 		super();
@@ -72,5 +76,13 @@ public class Produto extends Entidade {
 
 	public void setProductOwner(Membro productOwner) {
 		this.productOwner = productOwner;
+	}
+
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
 	}
 }

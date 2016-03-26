@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<title>Administrar Equipe</title>
+		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" />
+		<link
+			href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<h:outputStylesheet library="css" name="paper_theme_bootstrap.css"></h:outputStylesheet>
+		<style>
+			.panel-heading h3 {
+			    white-space: nowrap;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    line-height: normal;
+			    width: 75%;
+			    padding-top: 8px;
+			}
+			
+			.input-group .ui-autocomplete {
+				width: auto;
+			    zoom: 1;
+			    cursor: pointer;
+			    -moz-box-shadow: none;
+			    -webkit-box-shadow: none;
+			    box-shadow: none;
+			    position: relative;
+			    display: block;
+			}
+		</style>
+	</h:head>
+	<h:body style="padding:20px">
+		<ui:include src="/nav.xhtml" />
+		<form jsf:id="equipe-form">
+			<div jsf:id="inform-basic-equipe" class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Administrar Equipe</h3>
+				</div>
+				<div class="panel-body">
+					<p:messages id="messages" showDetail="false" autoUpdate="true"
+						closable="true" />
+					
+					<div class="form-group">
+						<label for="nome-equipe">Nome</label> <input jsf:id="nome-equipe"
+							type="text" class="form-control" placeholder="Nome da equipe"
+							jsf:value="#{equipeController.equipe.nome}" />
+					</div>
+					<div class="form-group">
+						<label for="descricao-equipe">Descrição</label>
+						<textarea jsf:id="descricao-equipe" class="form-control" rows="5"
+							placeholder="Insira uma descrição"
+							jsf:value="#{equipeController.equipe.descricao}" />
+					</div>
+					
+					<div class="form-group">
+						<label for="scrum-master">Scrum Master</label>
+						<h:selectOneMenu id="scrum-master" 
+							value="#{equipeController.equipe.scrumMaster}" 
+							styleClass="form-control">
+							<f:converter converterId="omnifaces.SelectItemsConverter" />
+							<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+							<f:selectItems 
+								value="#{equipeController.listarTodosOsMembros()}" 
+								var="membro" itemLabel="#{membro.nome}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Membros</h3>
+					<!--  
+					<button type="submit" class="btn btn-default pull-right btn-sm">
+						<i class="glyphicon glyphicon-plus" /> Adicionar
+					</button>
+					 <div class="clearfix"></div> -->
+				</div>
+				<div class="panel-body">
+					<div jsf:id="areaAdicionarMembro" class="input-group">
+						<p:autoComplete id="auto-complete"
+						 	minQueryLength="3" 
+						 	inputStyleClass="form-control"
+							emptyMessage="nenhum mebro encontrado" 
+							converter="membroConverter"
+							value="#{equipeController.membro}"
+							var="membro"
+							completeMethod="#{equipeController.autoCompleteMembrosPorNome}"
+							itemLabel="#{membro.nome}" 
+							itemValue="#{membro}"
+							placeholder="busque pelo nome do membro" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default btn-sm"
+								jsf:action="#{equipeController.adicionarMembro}">
+								<i class="glyphicon glyphicon-plus" /> Adicionar
+								<f:ajax execute="areaAdicionarMembro" render="tableMembros areaAdicionarMembro" />
+							</button>
+						</span>
+					</div>
+				</div>
+				
+				<p:dataTable 
+					id="tableMembros" editMode="true"
+					value="#{equipeController.membrosEquipe}" var="membro"
+					emptyMessage="nenhum membro adicionado" styleClass="table">
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{membro.nome}" />
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{membro.email}" />
+					</p:column>
+					
+					<p:column headerText="Nome de Usuário">
+						<h:outputText value="#{membro.nomeDeUsuario}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			<button type="Submit" class="btn btn-default btn-primary"
+				jsf:action="#{equipeController.alterar}">
+				<i class="glyphicon glyphicon-ok" /> Salvar
+				<f:ajax execute="inform-basic-equipe" render="@form" />
+			</button>
+		</form>
+	</h:body>
+</html>

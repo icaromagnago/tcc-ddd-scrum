@@ -21,4 +21,10 @@ public class MembroServiceImpl implements MembroService {
 
 		return novoMembro.getId();
 	}
+
+	@Override
+	public void atualizarMembro(Membro membro) {
+		validarEntidade(membro);
+		membroRepository.atualizar(membro);
+	}
 }

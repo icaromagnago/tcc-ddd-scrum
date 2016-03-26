@@ -7,7 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<title>Todos os membros</title>
+		<title>Todos as Equipes</title>
 		 
 		<link
 			href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
@@ -21,29 +21,26 @@
 			<p:growl id="grow-msg" globalOnly="true" life="6000" />
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">Todos os Membros</h3>
+					<h3 class="panel-title">Todas as Equipes</h3>
 				</div>
 				<div class="panel-body">
-					<p:dataTable id="dataTableMembros"
-						emptyMessage="Nenhum membro cadastrado" 
-						var="membro" value="#{membroController.listarTodosOsMembros()}">
+					<p:dataTable id="dataTableEquipe"
+						emptyMessage="Nenhuma equipe cadastrada" 
+						var="equipe" value="#{equipeController.listarTodasAsEquipes()}">
 						<p:column headerText="Id">
-							<h:outputText value="#{membro.id}" />
+							<h:outputText value="#{equipe.id}" />
 						</p:column>
 						<p:column headerText="Nome">
-							<h:outputText value="#{membro.nome}" />
+							<h:outputText value="#{equipe.nome}" />
 						</p:column>
-						<p:column headerText="Nome de usuário">
-							<h:outputText value="#{membro.nomeDeUsuario}" />
-						</p:column>
-						<p:column headerText="Email">
-							<h:outputText value="#{membro.email}" />
+						<p:column headerText="Scrum Master">
+							<h:outputText value="#{not empty equipe.scrumMaster ? equipe.scrumMaster.nome : '-'}" />
 						</p:column>
 						<p:column headerText="Opções">
-							<a jsf:id="administrar" jsf:outcome="/membro/administrar.xhtml" title="administrar"
+							<a jsf:id="administrar" jsf:outcome="/equipe/administrar.xhtml" title="administrar"
 								jsf:includeViewParams="true">
 								<i class="glyphicon glyphicon-cog" />Administrar
-								<f:param name="id" value="#{membro.id}" />
+								<f:param name="id" value="#{equipe.id}" />
 							</a>
 						</p:column>
 					</p:dataTable>

@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 import br.icc.ddd.scrum.domain.Entidade;
 import br.icc.ddd.scrum.domain.ValidacaoException;
+import br.icc.ddd.scrum.domain.produto.Produto;
 
 @Entity
 public class Equipe extends Entidade {
@@ -29,6 +30,9 @@ public class Equipe extends Entidade {
 
 	@OneToMany(mappedBy = "equipe")
 	private Set<Membro> membros;
+
+	@OneToMany(mappedBy = "equipe")
+	private Set<Produto> produtos;
 
 	public Equipe() {
 		super();
@@ -83,5 +87,53 @@ public class Equipe extends Entidade {
 
 	public void setMembros(Set<Membro> membros) {
 		this.membros = membros;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result
+				+ ((scrumMaster == null) ? 0 : scrumMaster.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Equipe other = (Equipe) obj;
+		if (descricao == null) {
+			if (other.descricao != null) {
+				return false;
+			}
+		} else if (!descricao.equals(other.descricao)) {
+			return false;
+		}
+		if (nome == null) {
+			if (other.nome != null) {
+				return false;
+			}
+		} else if (!nome.equals(other.nome)) {
+			return false;
+		}
+		if (scrumMaster == null) {
+			if (other.scrumMaster != null) {
+				return false;
+			}
+		} else if (!scrumMaster.equals(other.scrumMaster)) {
+			return false;
+		}
+		return true;
 	}
 }

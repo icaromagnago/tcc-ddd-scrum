@@ -1,14 +1,11 @@
 package br.icc.ddd.scrum.domain.equipe;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.Dependent;
-
-import br.icc.ddd.scrum.domain.RegraDeNegocioException;
 
 @Dependent
 public class AdicaoMembroEquipeService {
@@ -17,9 +14,9 @@ public class AdicaoMembroEquipeService {
 	 * Valida se os membros podem ser adicionados a nova equipe
 	 * @param membros membros que serão verificados
 	 * @param idEquipe id da equipe na qual o membro está sendo adicionado
-	 * @throws RegraDeNegocioException se algum membro já estiver em outra equipe
+	 * @return membros que estão em outra equipe
 	 */
-	public void membrosEmOutraEquipe(Set<Membro> membros, Long idEquipe) throws RegraDeNegocioException {
+	public List<Membro> membrosEmOutraEquipe(Set<Membro> membros, Long idEquipe) {
 		List<Membro> membrosEmEquipe = Collections.emptyList();
 		if (membros != null && !membros.isEmpty()) {
 			membrosEmEquipe = membros
@@ -28,13 +25,6 @@ public class AdicaoMembroEquipeService {
 					.collect(Collectors.toList());
 		}
 
-		if (!membrosEmEquipe.isEmpty()) {
-			List<String> mensagensErro = new ArrayList<String>();
-			membrosEmEquipe.forEach(membro -> mensagensErro.add(String
-					.format("%s já é membro de outra equipe",
-							membro.getNome())));
-
-			throw new RegraDeNegocioException(mensagensErro);
-		}
+		return membrosEmEquipe;
 	}
 }

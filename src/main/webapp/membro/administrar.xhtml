@@ -7,7 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<title>Administrar Produto</title>
+		<title>Novo Membro</title>
 		
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" />
 		<link
@@ -18,32 +18,51 @@
 	</h:head>
 	<h:body style="padding:20px">
 		<ui:include src="/nav.xhtml" />
-		<form jsf:id="administrarProduto">
+		<form jsf:id="membro-form">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">#{produtoController.produto.nome}</h3>
+					<h3 class="panel-title">Novo Membro</h3>
 				</div>
 				<div class="panel-body">
 					<p:messages id="messages" showDetail="false" autoUpdate="true"
 						closable="true" />
-	
-					<p:growl id="grow-msg" globalOnly="true" sticky="true" />
+					<p:growl id="grow-msg" globalOnly="true" life="6000" />
+					
 					<div class="form-group">
-						<label for="nomeproduto">Nome</label> <input jsf:id="nomeproduto"
-							type="text" class="form-control" placeholder="Nome do produto"
-							jsf:value="#{produtoController.produto.nome}" />
+						<label for="nome-membro">Nome</label> <input jsf:id="nome-membro"
+							type="text" class="form-control" placeholder="Nome do membro"
+							jsf:value="#{membroController.membro.nome}" />
 					</div>
 					<div class="form-group">
-						<label for="descricaoproduto">Descrição</label>
-						<textarea jsf:id="descricaoproduto" class="form-control" rows="5"
-							placeholder="Insira uma descrição"
-							jsf:value="#{produtoController.produto.descricao}" />
+						<label for="email-membro">Email</label>
+						<input jsf:id="email-membro" class="form-control" type="text"
+							placeholder="Insira um email válido"
+							jsf:value="#{membroController.membro.email}" />
+					</div>
+					<div class="form-group">
+						<label for="nome-usuario">Nome de usuário</label>
+						<input jsf:id="nome-usuario" class="form-control" type="text"
+							placeholder="Nome do usuário no sistema"
+							jsf:value="#{membroController.membro.nomeDeUsuario}" />
+					</div>
+					
+					<div class="form-group">
+						<label for="equipe">Equipe</label>
+						<h:selectOneMenu id="equipe" 
+							value="#{membroController.membro.equipe}" 
+							styleClass="form-control">
+							<f:converter converterId="omnifaces.SelectItemsConverter" />
+							<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+							<f:selectItems 
+								value="#{membroController.listarTodasAsEquipes()}" 
+								var="equipe" itemLabel="#{equipe.nome}" />
+						</h:selectOneMenu>
 					</div>
 	
 					<button type="Submit" class="btn btn-default btn-primary"
-						jsf:action="#{produtoController.criar}">
+						jsf:action="#{membroController.alterar}">
 						<i class="glyphicon glyphicon-ok" /> Salvar
-						<f:ajax execute="@form" render="administrarProduto grow-msg" />
+						<f:ajax execute="@form" render="membro-form" />
 					</button>
 				</div>
 			</div>
