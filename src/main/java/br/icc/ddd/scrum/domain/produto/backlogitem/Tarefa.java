@@ -28,6 +28,10 @@ public class Tarefa extends Entidade {
 	@ManyToOne(optional=false)
 	private BacklogItem backlogItem;
 
+	private Long tempoEstimado;
+
+	private Long tempoRestante;
+
 	public Tarefa() {
 		super();
 	}
