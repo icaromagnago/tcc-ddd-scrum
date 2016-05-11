@@ -11,6 +11,8 @@ public class Estimativa implements Serializable {
 
 	public Estimativa() {
 		super();
+		this.horasApontadas = 0;
+		this.horasEstimadas = 0;
 	}
 
 	public Estimativa(int horasEstimadas) {
@@ -44,5 +46,17 @@ public class Estimativa implements Serializable {
 
 	private void setHorasApontadas(int horasApontadas) {
 		this.horasApontadas = horasApontadas;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj != null) {
+			if(obj instanceof Estimativa) {
+				Estimativa outro = (Estimativa) obj;
+				return this.horasApontadas == outro.horasApontadas
+						&& this.horasEstimadas == outro.horasEstimadas;
+			}
+		}
+		return false;
 	}
 }

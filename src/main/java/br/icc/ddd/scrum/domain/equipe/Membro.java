@@ -114,20 +114,25 @@ public class Membro extends Entidade {
 		}
 	}
 
-	 @Override
-	 public String toString() {
-	     return String.format("%s[id=%d]", getClass().getSimpleName(), getId());
-	 }
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s[id=%d]", getClass().getSimpleName(), getId());
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (ativo ? 1231 : 1237);
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result
-				+ ((nomeDeUsuario == null) ? 0 : nomeDeUsuario.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -139,42 +144,18 @@ public class Membro extends Entidade {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof Membro)) {
 			return false;
 		}
 		Membro other = (Membro) obj;
-		if (ativo != other.ativo) {
-			return false;
-		}
-		if (email == null) {
-			if (other.email != null) {
+		if (id == null) {
+			if (other.id != null) {
 				return false;
 			}
-		} else if (!email.equals(other.email)) {
+		} else if (!(id == other.id)) {
 			return false;
 		}
-		if (nome == null) {
-			if (other.nome != null) {
-				return false;
-			}
-		} else if (!nome.equals(other.nome)) {
-			return false;
-		}
-		if (nomeDeUsuario == null) {
-			if (other.nomeDeUsuario != null) {
-				return false;
-			}
-		} else if (!nomeDeUsuario.equals(other.nomeDeUsuario)) {
-			return false;
-		}
+
 		return true;
-	}
-
-	public Equipe getEquipe() {
-		return equipe;
-	}
-
-	public void setEquipe(Equipe equipe) {
-		this.equipe = equipe;
 	}
 }

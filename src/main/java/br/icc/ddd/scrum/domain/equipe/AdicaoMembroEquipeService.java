@@ -16,13 +16,15 @@ public class AdicaoMembroEquipeService {
 	 * @param idEquipe id da equipe na qual o membro está sendo adicionado
 	 * @return membros que estão em outra equipe
 	 */
-	public List<Membro> membrosEmOutraEquipe(Set<Membro> membros, Long idEquipe) {
+	public List<Membro> membrosEmOutraEquipe(
+			Set<Membro> membros,
+			Long idEquipe) {
 		List<Membro> membrosEmEquipe = Collections.emptyList();
 		if (membros != null && !membros.isEmpty()) {
 			membrosEmEquipe = membros
-					.stream()
-					.filter(membro -> membro.ehMembroDeAlgumaOutraEquipe(idEquipe))
-					.collect(Collectors.toList());
+				.stream()
+				.filter(membro -> membro.ehMembroDeAlgumaOutraEquipe(idEquipe))
+				.collect(Collectors.toList());
 		}
 
 		return membrosEmEquipe;

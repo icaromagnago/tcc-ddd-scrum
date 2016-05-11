@@ -28,9 +28,7 @@ public class Tarefa extends Entidade {
 	@ManyToOne(optional=false)
 	private BacklogItem backlogItem;
 
-	private Long tempoEstimado;
-
-	private Long tempoRestante;
+	private Estimativa estimativa;
 
 	public Tarefa() {
 		super();
@@ -69,5 +67,13 @@ public class Tarefa extends Entidade {
 
 	public void setBacklogItem(BacklogItem backlogItem) {
 		this.backlogItem = backlogItem;
+	}
+
+	private Estimativa getEstimativa() {
+		return estimativa;
+	}
+
+	private void setEstimativa(Estimativa estimativa) {
+		this.estimativa = estimativa;
 	}
 }
