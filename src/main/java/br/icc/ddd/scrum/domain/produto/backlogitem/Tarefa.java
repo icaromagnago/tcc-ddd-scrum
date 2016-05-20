@@ -42,6 +42,19 @@ public class Tarefa extends Entidade {
 		this.backlogItem = backlogItem;
 	}
 
+	public Tarefa(String resumo, String descricao, StatusTarefa status, Estimativa estimativa, BacklogItem backlogItem) {
+		super();
+		this.resumo = resumo;
+		this.descricao = descricao;
+		this.status = status;
+		this.estimativa = estimativa;
+		this.backlogItem = backlogItem;
+	}
+
+	public void alterarStatus(StatusTarefa novoStatus) {
+		setStatus(novoStatus);
+	}
+
 	public String getResumo() {
 		return resumo;
 	}
@@ -69,11 +82,11 @@ public class Tarefa extends Entidade {
 		this.backlogItem = backlogItem;
 	}
 
-	private Estimativa getEstimativa() {
+	public Estimativa getEstimativa() {
 		return estimativa;
 	}
 
-	private void setEstimativa(Estimativa estimativa) {
+	public void setEstimativa(Estimativa estimativa) {
 		this.estimativa = estimativa;
 	}
 }
