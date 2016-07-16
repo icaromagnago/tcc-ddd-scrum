@@ -1,4 +1,4 @@
-package br.icc.ddd.scrum.infraestructure.persistencia;
+package br.icc.ddd.scrum.infraestructure.persistencia.hibernate;
 
 import br.icc.ddd.scrum.domain.produto.backlogitem.BacklogItem;
 import br.icc.ddd.scrum.domain.produto.backlogitem.BacklogItemRepository;

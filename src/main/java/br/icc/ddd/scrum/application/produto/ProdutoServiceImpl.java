@@ -2,6 +2,7 @@ package br.icc.ddd.scrum.application.produto;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.icc.ddd.scrum.domain.ValidacaoException;
 import br.icc.ddd.scrum.domain.produto.Produto;
@@ -12,7 +13,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	private static final long serialVersionUID = 1L;
 
-	@Inject
+	@Inject @Named("produtoHibernateRepository")
 	private ProdutoRepository produtoRepository;
 
 

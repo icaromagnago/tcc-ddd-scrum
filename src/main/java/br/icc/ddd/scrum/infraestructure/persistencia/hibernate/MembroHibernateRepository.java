@@ -1,4 +1,4 @@
-package br.icc.ddd.scrum.infraestructure.persistencia;
+package br.icc.ddd.scrum.infraestructure.persistencia.hibernate;
 
 import java.util.List;
 

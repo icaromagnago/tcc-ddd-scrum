@@ -1,4 +1,4 @@
-package br.icc.ddd.scrum.infraestructure.persistencia;
+package br.icc.ddd.scrum.infraestructure.persistencia.hibernate;
 
 import br.icc.ddd.scrum.domain.equipe.Equipe;
 import br.icc.ddd.scrum.domain.equipe.EquipeRepository;
